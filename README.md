@@ -27,3 +27,6 @@ In your browser, open `localhost:9000/profile`. For `python2` the corresponding 
 ## Debugging
 ### 500: Internal Server Error
 Most likely the login credentials supplied are incorrect. Check the `request.py` file for the fields `httpd_username` and `httpd_password` and see whether they are set appropriately.
+
+### KeyError: 'location'
+Most likely the login credentials supplied are incorrect. Check the `request.py` file for the fields `httpd_username` and `httpd_password` and see whether they are set appropriately.
