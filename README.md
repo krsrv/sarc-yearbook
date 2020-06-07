@@ -14,9 +14,9 @@ So for example, if I am A and I wrote for B, B wrote for C, C wrote for D (A, B,
 The files will be dumped in the same folder, so it's advised that you run the python3 script inside the folder `website`.
     
     cd website
-    python3 ../request.py "<ldap-username>" "<ldap-password>"
+    python3 ../request.py
 
-Make sure to use the double-quotes, especially if your credentials involve special characters.
+You'll be prompted for your **LDAP** UserID and your Password. The download will commence as soon as you have supplied your credentials.
 
 It will take quite some time to download the pages - I got around 450 folders finally in around 20 minutes. The actual download size will be lesser than the eventual size of the folder `website` because compression methods are used to send over files.
 Once the files are downloaded, i.e., `run.sh` has executed (or even while the files are downloading), run a simple server with the folder `website` as the root (assuming the files were downloaded to `website`). For instance, if I use the `python3` module `http.server`:
