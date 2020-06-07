@@ -85,5 +85,5 @@ command = [
 	'--output-document=/dev/null',
 	redirect
 ]
-print(" ".join(command))
-# os.system('wget ' + " ".join(flags) + ' ' + redirect)
+# print(" ".join(command))
+os.system(" ".join(command))
