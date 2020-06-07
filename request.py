@@ -1,5 +1,9 @@
 from requests import Request, Session
 import re
+import sys, subprocess
+
+if len(sys.argv) < 3:
+	raise ValueError("Please supply both username and password as inputs")
 
 session = Session()
 url, params, body, header = [], [], [], []
@@ -26,8 +30,8 @@ params.append(None)
 body.append({
 	'csrfmiddlewaretoken': csrfmiddlewaretoken,
 	'next': '',
-	'httpd_username': '',
-	'httpd_password': ''
+	'httpd_username': sys.argv[1],
+	'httpd_password': sys.argv[2]
 })
 header.append({
 	'Origin': 'https://gymkhana.iitb.ac.in',
@@ -77,13 +81,39 @@ redirect = re.sub('#', '?', redirect)
 redirect = re.sub('&', '\\&', redirect)
 # print(redirect)
 
-import os
-command = [
+
+## Connect to site using wget and access token
+access_command = [
 	'wget',
 	'--keep-session-cookies',
 	'--save-cookies cookie.tmp',
 	'--output-document=/dev/null',
 	redirect
 ]
-# print(" ".join(command))
-os.system(" ".join(command))
+
+try:
+	subprocess.run([" ".join(access_command)], shell=True, check=True)
+except subprocess.CalledProcessError as err:
+	print('\nError in getting access token\n')
+	raise err
+
+download_command = [
+	'wget',
+	'--load-cookies cookie.tmp',
+ 	'--keep-session-cookies',
+ 	'--save-cookies cookie.tmp2',
+ 	'--no-clobber',
+ 	'--page-requisites',
+ 	'--force-directories',
+ 	'--no-host-directories',
+ 	'--convert-links',
+ 	'--recursive',
+ 	"--reject-regex 'logout|home|polls|imghome'",
+ 	'--level=2',
+ 	'https://yearbook.sarc-iitb.org/profile/'
+]
+try:
+	subprocess.run([" ".join(download_command)], shell=True, check=True)
+except subprocess.CalledProcessError as err:
+	print('\nError in downloading\n')
+	raise err
