@@ -8,7 +8,7 @@ There are three levels of hierarchy downloaded:
 So for example, if I am A and I wrote for B, B wrote for C, C wrote for D (A, B, C, D all distinct) then pages for A, B, C will be downloaded.
 
 ## Requirements
-    requests==2.18.4
+    requests>=2.18.4
 
 ## Usage
 The files will be dumped in the same folder, so it's advised that you run the python3 script inside the folder `website`.
