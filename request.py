@@ -1,9 +1,9 @@
 from requests import Request, Session
 import re
-import sys, subprocess
+import sys, subprocess, getpass
 
-if len(sys.argv) < 3:
-	raise ValueError("Please supply both username and password as inputs")
+username = input("Enter LDAP-ID: ")
+password = getpass.getpass("LDAP Password: ")
 
 session = Session()
 url, params, body, header = [], [], [], []
@@ -30,17 +30,18 @@ params.append(None)
 body.append({
 	'csrfmiddlewaretoken': csrfmiddlewaretoken,
 	'next': '',
-	'httpd_username': sys.argv[1],
-	'httpd_password': sys.argv[2]
+	'httpd_username': username,
+	'httpd_password': password
 })
 header.append({
 	'Origin': 'https://gymkhana.iitb.ac.in',
 	'Referer': req.url
 })
 post = session.post(url[-1], params=params[-1], data=body[-1], headers=header[-1], allow_redirects=False)
+if "Location" not in post.headers:
+	exit("Either the program or you or Corona is CRAZY!!")
 
 redirect = None
-
 ## Check if authorisation page is skipped
 if re.search('access_token', post.headers['Location']):
 	## Skipped. Print the access token
