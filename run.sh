@@ -13,3 +13,6 @@ wget \
  --reject-regex 'logout|home|polls|imghome' \
  --level=2 \
  https://yearbook.sarc-iitb.org/profile/
+
+rm cookie.tmp
+rm cookie.tmp2
